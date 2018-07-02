@@ -1,28 +1,28 @@
 # md-test-files
 
-* \[Overview\](#overview)
-    * \[Philosophy\](#philosophy)
-    * \[Inline HTML\](#html)
-    * \[Automatic Escaping for Special Characters\](#autoescape)
-* \[Block Elements\](#block)
-    * \[Paragraphs and Line Breaks\](#p)
-    * \[Headers\](#header)
-    * \[Blockquotes\](#blockquote)
-    * \[Lists\](#list)
-    * \[Code Blocks\](#precode)
-    * \[Horizontal Rules\](#hr)
-* \[Span Elements\](#span)
-    * \[Links\](#link)
-    * \[Emphasis\](#em)
-    * \[Code\](#code)
-    * \[Images\](#img)
-* \[Miscellaneous\](#misc)
-    * \[Backslash Escapes\](#backslash)
-    * \[Automatic Links\](#autolink)
+* \\[Overview\\](#overview)
+    * \\[Philosophy\\](#philosophy)
+    * \\[Inline HTML\\](#html)
+    * \\[Automatic Escaping for Special Characters\\](#autoescape)
+* \\[Block Elements\\](#block)
+    * \\[Paragraphs and Line Breaks\\](#p)
+    * \\[Headers\\](#header)
+    * \\[Blockquotes\\](#blockquote)
+    * \\[Lists\\](#list)
+    * \\[Code Blocks\\](#precode)
+    * \\[Horizontal Rules\\](#hr)
+* \\[Span Elements\\](#span)
+    * \\[Links\\](#link)
+    * \\[Emphasis\\](#em)
+    * \\[Code\\](#code)
+    * \\[Images\\](#img)
+* \\[Miscellaneous\\](#misc)
+    * \\[Backslash Escapes\\](#backslash)
+    * \\[Automatic Links\\](#autolink)
 
 
 **Note:** This document is itself written using Markdown; you
-can \[see the source for it by adding '.text' to the URL\](/projects/markdown/syntax.text).
+can \\[see the source for it by adding '.text' to the URL\\](/projects/markdown/syntax.text).
 
 ----
 
@@ -36,8 +36,8 @@ Readability, however, is emphasized above all else. A Markdown-formatted
 document should be publishable as-is, as plain text, without looking
 like it's been marked up with tags or formatting instructions. While
 Markdown's syntax has been influenced by several existing text-to-HTML
-filters -- including \[Setext\](http://docutils.sourceforge.net/mirror/setext.html), \[atx\](http://www.aaronsw.com/2002/atx/), \[Textile\](http://textism.com/tools/textile/), \[reStructuredText\](http://docutils.sourceforge.net/rst.html),
-\[Grutatext\](http://www.triptico.com/software/grutatxt.html), and \[EtText\](http://ettext.taint.org/doc/) -- the single biggest source of
+filters -- including \\[Setext\\](http://docutils.sourceforge.net/mirror/setext.html), \\[atx\\](http://www.aaronsw.com/2002/atx/), \\[Textile\\](http://textism.com/tools/textile/), \\[reStructuredText\\](http://docutils.sourceforge.net/rst.html),
+\\[Grutatext\\](http://www.triptico.com/software/grutatxt.html), and \\[EtText\\](http://ettext.taint.org/doc/) -- the single biggest source of
 inspiration for Markdown's syntax is the format of plain text email.
 
 ## Block Elements
@@ -60,7 +60,7 @@ end a line with two or more spaces, then type return.
 
 ### Headers
 
-Markdown supports two styles of headers, \[Setext\] \[1\] and \[atx\] \[2\].
+Markdown supports two styles of headers, \\[Setext\\] \\[1\\] and \\[atx\\] \\[2\\].
 
 Optionally, you may "close" atx-style headers. This is purely
 cosmetic -- you can use this if you think it looks better. The
@@ -275,16 +275,16 @@ end tell
 
 Markdown supports two style of links: *inline* and *reference*.
 
-In both styles, the link text is delimited by \[square brackets\].
+In both styles, the link text is delimited by \\[square brackets\\].
 
 To create an inline link, use a set of regular parentheses immediately
 after the link text's closing square bracket. Inside the parentheses,
 put the URL where you want the link to point, along with an *optional*
 title for the link, surrounded in quotes. For example:
 
-This is \[an example\](http://example.com/) inline link.
+This is \\[an example\\](http://example.com/) inline link.
 
-\[This link\](http://example.net/) has no title attribute.
+\\[This link\\](http://example.net/) has no title attribute.
 
 ### Emphasis
 
