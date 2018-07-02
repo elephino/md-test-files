@@ -1,86 +1,310 @@
-# marked
+# md-test-files
 
-[Confluence](https://www.atlassian.com/software/confluence) macro plugin which renders __remote__ Markdown.
+* [Overview](#overview)
+    * [Philosophy](#philosophy)
+    * [Inline HTML](#html)
+    * [Automatic Escaping for Special Characters](#autoescape)
+* [Block Elements](#block)
+    * [Paragraphs and Line Breaks](#p)
+    * [Headers](#header)
+    * [Blockquotes](#blockquote)
+    * [Lists](#list)
+    * [Code Blocks](#precode)
+    * [Horizontal Rules](#hr)
+* [Span Elements](#span)
+    * [Links](#link)
+    * [Emphasis](#em)
+    * [Code](#code)
+    * [Images](#img)
+* [Miscellaneous](#misc)
+    * [Backslash Escapes](#backslash)
+    * [Automatic Links](#autolink)
 
-![screenshot showing usage of marked](https://cloud.githubusercontent.com/assets/527049/8500041/d1110e28-2198-11e5-8da2-157c8ac341c3.png) 
 
-## Installation
+**Note:** This document is itself written using Markdown; you
+can [see the source for it by adding '.text' to the URL](/projects/markdown/syntax.text).
 
-### Via [Attlasian Marketplace](https://marketplace.atlassian.com/plugins/com.borisdiakur.marked)
+----
 
-1. Log into your Confluence instance as an admin.
-2. Click the admin dropdown and choose __Add-ons__. The _Manage add-ons_ screen loads.
-3. Click __Find new add-ons__ from the left-hand side of the page.
-4. Locate __marked__ via search. Results include add-on versions compatible with your Confluence instance.
-5. Click __Install__ to download and install your add-on.
-6. You're all set! Click __Close__ in the _Installed and ready to go_ dialog.
+## Overview
 
-### Manually
+### Philosophy
 
-1. Download the _marked_ jar file either from the [Attlasian Marketplace](https://marketplace.atlassian.com/plugins/com.borisdiakur.marked)
-or from [GitHub](https://github.com/borisdiakur/marked). 
-2. Log into your Confluence instance as an admin.
-3. Click the admin dropdown and choose __Add-ons__. The _Manage add-ons_ screen loads.
-4. Click __Upload add-on__ at the top right of the page. The _Upload add-on_ dialog loads.
-5. Choose the file from you file system or enter the URL to the location of the raw jar file and click __upload__. And that's it!
+Markdown is intended to be as easy-to-read and easy-to-write as is feasible.
 
-## Usage
+Readability, however, is emphasized above all else. A Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it's been marked up with tags or formatting instructions. While
+Markdown's syntax has been influenced by several existing text-to-HTML
+filters -- including [Setext](http://docutils.sourceforge.net/mirror/setext.html), [atx](http://www.aaronsw.com/2002/atx/), [Textile](http://textism.com/tools/textile/), [reStructuredText](http://docutils.sourceforge.net/rst.html),
+[Grutatext](http://www.triptico.com/software/grutatxt.html), and [EtText](http://ettext.taint.org/doc/) -- the single biggest source of
+inspiration for Markdown's syntax is the format of plain text email.
 
-1. Select _marked_ in the _Select macro_ dialog.
-2. Insert the URL of your raw markdown resource in the input field labeled with _URL_.
-3. Preview the rendered result by clicking on _Preview_.
-4. Insert the rendered content by clicking on _Insert_. You can now preview and save the document.
+## Block Elements
 
-## FAQ
+### Paragraphs and Line Breaks
 
-### 1. Can _marked_ access resources which reside in a private repository?
+A paragraph is simply one or more consecutive lines of text, separated
+by one or more blank lines. (A blank line is any line that looks like a
+blank line -- a line containing nothing but spaces or tabs is considered
+blank.) Normal paragraphs should not be indented with spaces or tabs.
 
-When working with repositories which require authentication you'll might need to use the associated API
-in order to access those files.
-For example you'll __not__ be able to access a file on a private [__GitLab__](https://about.gitlab.com/) instance
-using the following URL:
+The implication of the "one or more consecutive lines of text" rule is
+that Markdown supports "hard-wrapped" text paragraphs. This differs
+significantly from most other text-to-HTML formatters (including Movable
+Type's "Convert Line Breaks" option) which translate every line break
+character in a paragraph into a `<br />` tag.
+
+When you *do* want to insert a `<br />` break tag using Markdown, you
+end a line with two or more spaces, then type return.
+
+### Headers
+
+Markdown supports two styles of headers, [Setext] [1] and [atx] [2].
+
+Optionally, you may "close" atx-style headers. This is purely
+cosmetic -- you can use this if you think it looks better. The
+closing hashes don't even need to match the number of hashes
+used to open the header. (The number of opening hashes
+determines the header level.)
+
+
+### Blockquotes
+
+Markdown uses email-style `>` characters for blockquoting. If you're
+familiar with quoting passages of text in an email message, then you
+know how to create a blockquote in Markdown. It looks best if you hard
+wrap the text and put a `>` before every line:
+
+> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+> 
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+> id sem consectetuer libero luctus adipiscing.
+
+Markdown allows you to be lazy and only put the `>` before the first
+line of a hard-wrapped paragraph:
+
+> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+
+Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
+adding additional levels of `>`:
+
+> This is the first level of quoting.
+>
+> > This is nested blockquote.
+>
+> Back to the first level.
+
+Blockquotes can contain other Markdown elements, including headers, lists,
+and code blocks:
+
+> ## This is a header.
+> 
+> 1.   This is the first list item.
+> 2.   This is the second list item.
+> 
+> Here's some example code:
+> 
+>     return shell_exec("echo $input | $markdown_script");
+
+Any decent text editor should make email-style quoting easy. For
+example, with BBEdit, you can make a selection and choose Increase
+Quote Level from the Text menu.
+
+
+### Lists
+
+Markdown supports ordered (numbered) and unordered (bulleted) lists.
+
+Unordered lists use asterisks, pluses, and hyphens -- interchangably
+-- as list markers:
+
+* Red
+* Green
+* Blue
+
+is equivalent to:
+
++   Red
++   Green
++   Blue
+
+and:
+
+-   Red
+-   Green
+-   Blue
+
+Ordered lists use numbers followed by periods:
+
+1.  Bird
+2.  McHale
+3.  Parish
+
+It's important to note that the actual numbers you use to mark the
+list have no effect on the HTML output Markdown produces. The HTML
+Markdown produces from the above list is:
+
+If you instead wrote the list in Markdown like this:
+
+1.  Bird
+1.  McHale
+1.  Parish
+
+or even:
+
+3. Bird
+1. McHale
+8. Parish
+
+you'd get the exact same HTML output. The point is, if you want to,
+you can use ordinal numbers in your ordered Markdown lists, so that
+the numbers in your source match the numbers in your published HTML.
+But if you want to be lazy, you don't have to.
+
+To make lists look nice, you can wrap items with hanging indents:
+
+* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+* Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+
+But if you want to be lazy, you don't have to:
+
+* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+* Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+
+List items may consist of multiple paragraphs. Each subsequent
+paragraph in a list item must be indented by either 4 spaces
+or one tab:
+
+1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+
+It looks nice if you indent every line of the subsequent
+paragraphs, but here again, Markdown will allow you to be
+lazy:
+
+* This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+* Another item in the same list.
+
+To put a blockquote within a list item, the blockquote's `>`
+delimiters need to be indented:
+
+* A list item with a blockquote:
+
+    > This is a blockquote
+    > inside a list item.
+
+To put a code block within a list item, the code block needs
+to be indented *twice* -- 8 spaces or two tabs:
+
+* A list item with a code block:
+
+        <code goes here>
+
+### Code Blocks
+
+Pre-formatted code blocks are used for writing about programming or
+markup source code. Rather than forming normal paragraphs, the lines
+of a code block are interpreted literally. Markdown wraps a code block
+in both `<pre>` and `<code>` tags.
+
+To produce a code block in Markdown, simply indent every line of the
+block by at least 4 spaces or 1 tab.
+
+This is a normal paragraph:
+
+    This is a code block.
+
+Here is an example of AppleScript:
+
+    tell application "Foo"
+        beep
+    end tell
+
+A code block continues until it reaches a line that is not indented
+(or the end of the article).
+
+Within a code block, ampersands (`&`) and angle brackets (`<` and `>`)
+are automatically converted into HTML entities. This makes it very
+easy to include example HTML source code using Markdown -- just paste
+it and indent it, and Markdown will handle the hassle of encoding the
+ampersands and angle brackets. For example, this:
+
+    <div class="footer">
+        &copy; 2004 Foo Corporation
+    </div>
+
+Regular Markdown syntax is not processed within code blocks. E.g.,
+asterisks are just literal asterisks within a code block. This means
+it's also easy to use Markdown to write about Markdown's own syntax.
 
 ```
-https://gitlab.yourdomain.com/your-group/your-project/blob/master/README.md
+tell application "Foo"
+    beep
+end tell
 ```
 
-Instead you will have to authenticate via the [GitLab API](http://doc.gitlab.com/ce/api/README.html).
-You might want to add a guest user to your GitLab project and use his/her private token.
+## Span Elements
 
-In order to get the correct URL you would do the following:
+### Links
 
-1. Get the project id for a given project name: `https://gitlab.yourdomain.com/api/v3/projects/your-group%2Fyour-project?private_token=your-private-token`
-2. Get a list of files for a given project id: `https://gitlab.yourdomain.com/api/v3/projects/your-project-id/repository/tree?private_token=your-private-token`
-3. Get the raw file content for a given file id: `https://gitlab.yourdomain.com/api/v3/projects/your-project-id/repository/raw_blobs/your-file-id?private_token=your-private-token`
+Markdown supports two style of links: *inline* and *reference*.
 
-__Note__: When working with another repository management system such as [Bitbucket](https://bitbucket.org/) or whatnot
-you will have to comply with the API given.
+In both styles, the link text is delimited by [square brackets].
 
-_marked_ also supports basic auth.
+To create an inline link, use a set of regular parentheses immediately
+after the link text's closing square bracket. Inside the parentheses,
+put the URL where you want the link to point, along with an *optional*
+title for the link, surrounded in quotes. For example:
 
-### 2. I get a PKIX path building failed error. What's that? 
+This is [an example](http://example.com/) inline link.
 
-Instead of the expected output you might see the following error message:
+[This link](http://example.net/) has no title attribute.
 
-> Cannot read resource.
-  sun.security.validator.ValidatorException: 
-  PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: 
-  unable to find valid certification path to requested target
+### Emphasis
 
-The cause of the exception is that the resource host is running over SSL
-and your Confluence instance doesn't trust the certificate of that host.   
-The solution is to add the resource host's SSL Certificate to the Confluence Java Keystore.
-For more information please refer to the [Confluence documentation](https://confluence.atlassian.com/display/DOC/Connecting+to+LDAP+or+JIRA+or+Other+Services+via+SSL).
+Markdown treats asterisks (`*`) and underscores (`_`) as indicators of
+emphasis. Text wrapped with one `*` or `_` will be wrapped with an
+HTML `<em>` tag; double `*`'s or `_`'s will be wrapped with an HTML
+`<strong>` tag. E.g., this input:
 
-### 3. Is it free of charge?
+*single asterisks*
 
-Yes.
+_single underscores_
 
-## Support
+**double asterisks**
 
-If you have any trouble with _marked_ help yourself by [__filing an issue__](https://github.com/borisdiakur/marked/issues)
-or even better support back with a [__pull request__](https://github.com/borisdiakur/marked/pulls).
+__double underscores__
 
-## Credits
+### Code
 
-_marked_ uses the Markdown processing library [__flexmark-java__](https://github.com/vsch/flexmark-java) under the hood.
+To indicate a span of code, wrap it with backtick quotes (`` ` ``).
+Unlike a pre-formatted code block, a code span indicates code within a
+normal paragraph. For example:
+
+Use the `printf()` function.
